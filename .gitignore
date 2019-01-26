@@ -34,3 +34,7 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+
+# MacOS Temp Files
+.DS_Store
+._.DS_Store
