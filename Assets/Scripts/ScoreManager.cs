@@ -4,7 +4,6 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-
 public class ScoreItem : IComparable
 {
     protected string name;
@@ -61,7 +60,7 @@ public class ScoreManager : MonoBehaviour
     void Start()
     {
         scores = new ScoreItem[5];
-        
+
         scores[0] = new ScoreItem(PlayerPrefs.GetString("FirstPlayerName", ""), PlayerPrefs.GetInt("FirstPlayerScore", 0));
         scores[1] = new ScoreItem(PlayerPrefs.GetString("SecondPlayerName", ""), PlayerPrefs.GetInt("SecondPlayerScore", 0));
         scores[2] = new ScoreItem(PlayerPrefs.GetString("ThirdPlayerName", ""), PlayerPrefs.GetInt("ThirdPlayerScore", 0));
@@ -105,16 +104,16 @@ public class ScoreManager : MonoBehaviour
     {
         PlayerPrefs.SetString("FirstPlayerName", scores[0].Name);
         PlayerPrefs.SetInt("FirstPlayerScore", scores[0].Score);
-        
+
         PlayerPrefs.SetString("SecondPlayerName", scores[1].Name);
         PlayerPrefs.SetInt("SecondPlayerScore", scores[1].Score);
-        
+
         PlayerPrefs.SetString("ThirdPlayerName", scores[2].Name);
         PlayerPrefs.SetInt("ThirdPlayerScore", scores[2].Score);
-        
+
         PlayerPrefs.SetString("FourthPlayerName", scores[3].Name);
         PlayerPrefs.SetInt("FourthPlayerScore", scores[3].Score);
-        
+
         PlayerPrefs.SetString("FifthPlayerName", scores[4].Name);
         PlayerPrefs.SetInt("FifthPlayerScore", scores[4].Score);
     }

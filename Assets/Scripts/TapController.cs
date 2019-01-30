@@ -8,7 +8,7 @@ public class TapController : MonoBehaviour
     public float tiltSmooth = 5;
     private GameManager gameManager;
     //public Vector3 startPosition;
-    
+
     private Quaternion downRotation;
     private Quaternion forwardRotation;
 

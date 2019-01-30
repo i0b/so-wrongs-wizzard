@@ -1,18 +1,19 @@
 ﻿using UnityEngine;
 
+
 public class moveAndDestroyElement : MonoBehaviour
 {
     private GameManager gameManager;
     private float originalYposition;
     private bool dementorMoveUp;
-    
+
     void Start()
     {
         dementorMoveUp = true;
         gameManager = GameManager.Instance;
         originalYposition = gameObject.transform.position.y;
     }
-    
+
     void Update()
     {
         if (gameObject.tag == "Dementor")
@@ -36,15 +37,15 @@ public class moveAndDestroyElement : MonoBehaviour
 
             else
             {
-                if(dementorMoveUp && (transform.position.y <= originalYposition - gameManager.DementorWiggleDistance))
+                if (dementorMoveUp && (transform.position.y <= originalYposition - gameManager.DementorWiggleDistance))
                 {
                     dementorMoveUp = false;
                 }
-                else if(!dementorMoveUp && (transform.position.y >= originalYposition + gameManager.DementorWiggleDistance))
+                else if (!dementorMoveUp && (transform.position.y >= originalYposition + gameManager.DementorWiggleDistance))
                 {
                     dementorMoveUp = true;
                 }
-                
+
                 Vector3 dementorPosition = transform.position;
                 float stepDementorObject = 1 * Time.deltaTime;
 

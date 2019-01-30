@@ -220,7 +220,7 @@ public class GameManager : MonoBehaviour
 
             else
             {
-                TimerText.text = ((int)itemTimer).ToString() + " s";
+                TimerText.text = ((int)itemTimer+1).ToString() + " s";
             }
         }
     }
