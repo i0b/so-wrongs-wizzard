@@ -21,7 +21,7 @@ public class moveAndDestroyElement : MonoBehaviour
             if (gameManager.ActiveItem == GameManager.ActiveItemType.Turbo)
             {
                 Vector3 dementorPosition = transform.position;
-                float stepDementorObject = 3 * Time.deltaTime;
+                float stepDementorObject = 6 * Time.deltaTime;
 
                 if (dementorPosition.y >= 0 && dementorPosition.y != gameManager.EvadeDementorYposition)
                 {

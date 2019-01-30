@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/FlappyWizard.unity
+    guid: 108ad81672c6f40b78a39acef6044fd7
   m_configObjects: {}

@@ -88,6 +88,11 @@ public class ScoreManager : MonoBehaviour
 
     public void NewScore(string name, int score)
     {
+        if (name.Equals(""))
+        {
+            return;
+        }
+
         Array.Sort(this.scores);
         Array.Reverse(this.scores);
 

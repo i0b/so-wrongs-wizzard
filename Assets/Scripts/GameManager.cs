@@ -339,18 +339,13 @@ public class GameManager : MonoBehaviour
                 Score();
                 Debug.Log("scored!");
                 break;
+            case "Dementor":
             case "DeadZone":
                 if (invincible && wizardGameObject.transform.position.y < 3.7f && wizardGameObject.transform.position.y > -3.7f)
                 {
                     ResetItemEffect();
                 }
                 else if (activeItem != ActiveItemType.Turbo)
-                {
-                    SetGameState(GameState.GameOver);
-                }
-                break;
-            case "Dementor":
-                if (activeItem != ActiveItemType.Turbo)
                 {
                     SetGameState(GameState.GameOver);
                 }

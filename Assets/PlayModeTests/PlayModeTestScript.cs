@@ -23,15 +23,21 @@ namespace Tests
         {
             // Use the Assert class to test conditions.
             // Use yield to skip a frame.
+            var prevScene = SceneManager.GetActiveScene();
 
-            var loadSceneOperation = SceneManager.LoadSceneAsync("FlappyWizard");
+            var loadSceneOperation = SceneManager.LoadSceneAsync("FlappyWizard", LoadSceneMode.Additive);
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName("FlappyWizzard"));
 
+            yield return new WaitForSeconds(1.0f);
+
+            /*
             loadSceneOperation.allowSceneActivation = true;
 
             while (!loadSceneOperation.isDone)
             {
                 yield return null;
             }
+            */
 
             GameManager gameManager = GameManager.Instance;
 
