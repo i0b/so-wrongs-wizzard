@@ -3,7 +3,15 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - towerReference
+  - DeadZone
+  - ScoreZone
+  - ItemPoints
+  - ItemTurbo
+  - ItemTroll
+  - ItemInvincible
+  - Dementor
   layers:
   - Default
   - TransparentFX

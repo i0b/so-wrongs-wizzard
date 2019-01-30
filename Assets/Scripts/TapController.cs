@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class TapController : MonoBehaviour
 {
-    public float tapForce = 300;
+    public float tapForce = 250;
     public float tiltSmooth = 5;
+    private GameManager gameManager;
     //public Vector3 startPosition;
-
-    Rigidbody2D rigidbody;
-    Quaternion downRotation;
-    Quaternion forwardRotation;
+    
+    private Quaternion downRotation;
+    private Quaternion forwardRotation;
 
 
     void Start()
     {
-        rigidbody = GetComponent<Rigidbody2D>();
+        gameManager = GameManager.Instance;
         downRotation = Quaternion.Euler(0, 0, -50);
         forwardRotation = Quaternion.Euler(0, 0, 20);
         // rigidbody.simulated = false;
@@ -23,11 +23,39 @@ public class TapController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if ((Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space)) && gameManager.GameOver == false)
         {
             transform.rotation = forwardRotation;
-            rigidbody.velocity = Vector3.zero;
-            rigidbody.AddForce(Vector3.up * tapForce, ForceMode2D.Force);
+            GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+            GetComponent<Rigidbody2D>().AddForce(Vector3.up * tapForce, ForceMode2D.Force);
+        }
+
+        if (!gameManager.PotionPresent)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                gameManager.AddItem(gameManager.ItemInvinciblePrefab, 0.0f);
+                gameManager.PotionPresent = true;
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                gameManager.AddItem(gameManager.ItemPointsPrefab, 0.0f);
+                gameManager.PotionPresent = true;
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                gameManager.AddItem(gameManager.ItemTrollPrefab, 0.0f);
+                gameManager.PotionPresent = true;
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                gameManager.AddItem(gameManager.ItemTurboPrefab, 0.0f);
+                gameManager.PotionPresent = true;
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha5))
+            {
+                gameManager.AddItem(gameManager.DementorPrefab, 0.0f);
+            }
         }
     }
 
@@ -36,13 +64,11 @@ public class TapController : MonoBehaviour
         transform.rotation = Quaternion.Lerp(transform.rotation, downRotation, tiltSmooth * Time.deltaTime);
     }
 
+
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "ScoreZone") { 
-            // score update
-        }
-        if(collision.gameObject.tag == "DeadZone") {
-            rigidbody.simulated = false;
-        }
+        Debug.Log("Wizard colided with " + collision.gameObject.tag);
+        gameManager.Collision(gameObject, collision);
     }
 }
