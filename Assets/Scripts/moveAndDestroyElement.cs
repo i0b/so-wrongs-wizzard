@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 
+// Script meant for moving obstacles such as towers, items, and dementors
+// deleting them when they are off-screen and as well as when the game is over
 
 public class moveAndDestroyElement : MonoBehaviour
 {
@@ -16,8 +18,15 @@ public class moveAndDestroyElement : MonoBehaviour
 
     void Update()
     {
+        // delete objects if game is not running
+        if (gameManager.GameOver)
+        {
+            Destroy(gameObject);
+        }
+
         if (gameObject.tag == "Dementor")
         {
+            // if an turbo potion has been collected the dementor has to move out of the way
             if (gameManager.ActiveItem == GameManager.ActiveItemType.Turbo)
             {
                 Vector3 dementorPosition = transform.position;
@@ -35,6 +44,7 @@ public class moveAndDestroyElement : MonoBehaviour
                 }
             }
 
+            // normaly the dementor should not only move up and down on the y-axes
             else
             {
                 if (dementorMoveUp && (transform.position.y <= originalYposition - gameManager.DementorWiggleDistance))
@@ -61,7 +71,8 @@ public class moveAndDestroyElement : MonoBehaviour
                 }
             }
         }
-        // Tower
+
+        // if an turbo potion has been collected the tower shoud be centered so that the wizard can move in a straight line
         else if (gameObject.tag == "ScoreZone")
         {
             if (gameManager.ActiveItem == GameManager.ActiveItemType.Turbo)
@@ -76,26 +87,22 @@ public class moveAndDestroyElement : MonoBehaviour
                 }
             }
         }
+        
 
-        if (gameManager.GameOver == false)
+        // move along the x-axes and delete if the position is off-screen
+
+        Vector3 currentPosition = gameObject.transform.position;
+
+        if (currentPosition.x < -gameManager.BackgroundWidth / 2)
         {
-            Vector3 currentPosition = gameObject.transform.position;
-
-            if (currentPosition.x < -gameManager.BackgroundWidth / 2)
+            if (tag == "ItemPoints" || tag == "ItemInvincible" || tag == "ItemTurbo" || tag == "ItemTroll")
             {
-                if (tag == "ItemPoints" || tag == "ItemInvincible" || tag == "ItemTurbo" || tag == "ItemTroll")
-                {
-                    gameManager.PotionPresent = false;
-                }
-
-                Destroy(gameObject);
+                gameManager.PotionPresent = false;
             }
 
-            gameObject.transform.position = new Vector3(currentPosition.x - gameManager.GameSpeed * Time.deltaTime, currentPosition.y);
-        }
-        else
-        {
             Destroy(gameObject);
         }
+
+        gameObject.transform.position = new Vector3(currentPosition.x - gameManager.GameSpeed * Time.deltaTime, currentPosition.y);
     }
 }

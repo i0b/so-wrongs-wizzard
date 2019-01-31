@@ -9,6 +9,8 @@ public class ScoreItem : IComparable
     protected string name;
     protected int score;
 
+    // ScoreItem class
+    // sorting it sorts by ascending score value
     public ScoreItem(string name, int score)
     {
         this.name = name;
@@ -39,23 +41,34 @@ public class ScoreItem : IComparable
     }
 }
 
+// the score class hold five score values and
+// has a reference to the text field representations
+// allowing update and insertion operations
+
 public class ScoreManager : MonoBehaviour
 {
-    public Text firstPlayerScore;
-    public Text firstPlayerName;
-    public Text secondPlayerScore;
-    public Text secondPlayerName;
-    public Text thirdPlayerScore;
-    public Text thirdPlayerName;
-    public Text fourthPlayerScore;
-    public Text fourthPlayerName;
-    public Text fifthPlayerScore;
-    public Text fifthPlayerName;
+    public Text FirstPlayerScore;
+    public Text FirstPlayerName;
+    public Text SecondPlayerScore;
+    public Text SecondPlayerName;
+    public Text ThirdPlayerScore;
+    public Text ThirdPlayerName;
+    public Text FourthPlayerScore;
+    public Text FourthPlayerName;
+    public Text FifthPlayerScore;
+    public Text FifthPlayerName;
 
-    public GameManager gameManager;
     public Text NameInput;
 
-    ScoreItem[] scores;
+    public static ScoreManager Instance;
+
+    private GameManager gameManager;
+    private ScoreItem[] scores;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     void Start()
     {
@@ -68,24 +81,26 @@ public class ScoreManager : MonoBehaviour
         scores[4] = new ScoreItem(PlayerPrefs.GetString("FifthPlayerName", ""), PlayerPrefs.GetInt("FifthPlayerScore", 0));
     }
 
+    // sets text field values to internal score data set
     public void UpdateScoreboard()
     {
-        firstPlayerScore.text = scores[0].Score.ToString();
-        firstPlayerName.text = scores[0].Name;
+        FirstPlayerScore.text = scores[0].Score.ToString();
+        FirstPlayerName.text = scores[0].Name;
 
-        secondPlayerScore.text = scores[1].Score.ToString();
-        secondPlayerName.text = scores[1].Name;
+        SecondPlayerScore.text = scores[1].Score.ToString();
+        SecondPlayerName.text = scores[1].Name;
 
-        thirdPlayerScore.text = scores[2].Score.ToString();
-        thirdPlayerName.text = scores[2].Name;
+        ThirdPlayerScore.text = scores[2].Score.ToString();
+        ThirdPlayerName.text = scores[2].Name;
 
-        fourthPlayerScore.text = scores[3].Score.ToString();
-        fourthPlayerName.text = scores[3].Name;
+        FourthPlayerScore.text = scores[3].Score.ToString();
+        FourthPlayerName.text = scores[3].Name;
 
-        fifthPlayerScore.text = scores[4].Score.ToString();
-        fifthPlayerName.text = scores[4].Name;
+        FifthPlayerScore.text = scores[4].Score.ToString();
+        FifthPlayerName.text = scores[4].Name;
     }
 
+    // adds new score by removing the smallest valued score keeping the score sorted
     public void NewScore(string name, int score)
     {
         if (name.Equals(""))
@@ -105,6 +120,7 @@ public class ScoreManager : MonoBehaviour
         SaveScore();
     }
 
+    // save score persistanly
     public void SaveScore()
     {
         PlayerPrefs.SetString("FirstPlayerName", scores[0].Name);
@@ -126,5 +142,11 @@ public class ScoreManager : MonoBehaviour
     public int GetMinScore()
     {
         return scores[4].Score;
+    }
+
+    // delete all score entries / resets score
+    public void ResetScore()
+    {
+        PlayerPrefs.DeleteAll();
     }
 }

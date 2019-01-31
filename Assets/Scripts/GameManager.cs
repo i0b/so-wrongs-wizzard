@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -43,8 +41,7 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance;
 
-
-    enum GameState
+    public enum GameState
     {
         None,
         Started,
@@ -69,7 +66,6 @@ public class GameManager : MonoBehaviour
     private bool invincible;
     private float initialGameSpeed;
 
-
     private ActiveItemType activeItem;
     public ActiveItemType ActiveItem { get { return activeItem; } }
 
@@ -84,13 +80,9 @@ public class GameManager : MonoBehaviour
 
     public int GetScore() => score;
 
+    public bool GameOver { get { return gameState != GameState.Started; } }
 
-    public bool GameOver { get { return gameState == GameState.GameOver; } }
-
-    public float getSpeed()
-    {
-        return GameSpeed;
-    }
+    public float GetSpeed() => GameSpeed;
 
     public void Score()
     {
@@ -126,10 +118,9 @@ public class GameManager : MonoBehaviour
     public void NewScore()
     {
         ScoreManager.NewScore(HighscoreTextInputField.text, score);
-        //HighscoreInput.GetComponent<Text>().text = "";
     }
 
-    void SetGameState(GameState state)
+    public void SetGameState(GameState state)
     {
         switch(state)
         {

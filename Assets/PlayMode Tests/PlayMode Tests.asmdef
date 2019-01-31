@@ -1,7 +1,13 @@
 {
-    "name": "FlappyWizzardScriptAssembly",
-    "references": [],
-    "optionalUnityReferences": [],
+    "name": "PlayModeTests",
+    "references": [
+        "PrefabsAssembly",
+        "ScenesAssembly",
+        "ScriptsAssembly"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
