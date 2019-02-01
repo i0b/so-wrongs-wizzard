@@ -90,11 +90,16 @@ namespace Tests
         {
             SceneManager.LoadScene(0);
             yield return null;
+
+            GameManager gameManager = GameManager.Instance;
+
+            Assert.IsTrue(GameObject.Find("MainMenu").activeInHierarchy);
             Assert.IsTrue(GameObject.Find("Environment").activeInHierarchy);
             Assert.IsTrue(GameObject.Find("Background").activeInHierarchy);
-            Assert.IsFalse(GameObject.Find("HelpMenu").activeInHierarchy);
-            Assert.IsFalse(GameObject.Find("GameOverMenu").activeInHierarchy);
-            Assert.IsFalse(GameObject.Find("HighscoreMenu").activeInHierarchy);
+            // if the following game objects have not been activated they have not been created, yet
+            Assert.IsNull(GameObject.Find("HelpMenu"));
+            Assert.IsNull(GameObject.Find("GameOverMenu"));
+            Assert.IsNull(GameObject.Find("HighscoreMenu"));
         }
 
         [UnityTest]
@@ -112,13 +117,10 @@ namespace Tests
             scoreManager.NewScore(nameString, scoreValue);
             scoreManager.UpdateScoreboard();
 
-            GameObject firstPlayerNameObject = GameObject.Find("FirstName");
-            GameObject firstPlayerScoreObject = GameObject.Find("FirstScore");
-            Assert.IsNotNull(firstPlayerNameObject);
-            Assert.IsNotNull(firstPlayerScoreObject);
-
-            Assert.IsTrue(firstPlayerNameObject.GetComponent<Text>().text.CompareTo(nameString) == 0);
-            Assert.IsTrue(firstPlayerScoreObject.GetComponent<Text>().text.CompareTo(scoreValue.ToString()) == 0);
+            Assert.IsTrue(scoreManager.FirstPlayerName.text.CompareTo(nameString) == 0);
+            Assert.IsTrue(scoreManager.FirstPlayerScore.text.CompareTo(scoreValue.ToString()) == 0);
+            
+            scoreManager.ResetScore();
         }
 
         [UnityTest]
@@ -129,12 +131,12 @@ namespace Tests
 
             GameManager gameManager = GameManager.Instance;
 
-            Assert.AreEqual(GameManager.GameState.GameOver, gameManager.GameOver);
+            Assert.IsTrue(gameManager.GameOver);
 
             GameObject.Find("PlayButton").GetComponent<Button>().onClick.Invoke();
             yield return null;
 
-            Assert.AreNotEqual(GameManager.GameState.GameOver, gameManager.GameOver);
+            Assert.IsFalse(gameManager.GameOver);
         }
 
 
@@ -150,7 +152,7 @@ namespace Tests
 
             GameManager gameManager = GameManager.Instance;
 
-            gameManager.AddItem(gameManager.ItemInvinciblePrefab, 0.0f);
+            Object.Instantiate(gameManager.ItemInvinciblePrefab, new Vector3(1.0f, 0.0f), Quaternion.identity);
             gameManager.PotionPresent = true;
 
             WizardScript tapController = WizardScript.Instance;
@@ -176,7 +178,7 @@ namespace Tests
 
             GameManager gameManager = GameManager.Instance;
 
-            gameManager.AddItem(gameManager.ItemTurboPrefab, 0.0f);
+            Object.Instantiate(gameManager.ItemTurboPrefab, new Vector3(2.0f, 0.0f), Quaternion.identity);
             gameManager.PotionPresent = true;
 
             WizardScript tapController = WizardScript.Instance;
@@ -202,7 +204,7 @@ namespace Tests
 
             GameManager gameManager = GameManager.Instance;
 
-            gameManager.AddItem(gameManager.ItemTrollPrefab, 0.0f);
+            Object.Instantiate(gameManager.ItemTrollPrefab, new Vector3(1.0f, 0.0f), Quaternion.identity);
             gameManager.PotionPresent = true;
 
             WizardScript tapController = WizardScript.Instance;
@@ -228,7 +230,7 @@ namespace Tests
 
             GameManager gameManager = GameManager.Instance;
 
-            gameManager.AddItem(gameManager.ItemPointsPrefab, 0.0f);
+            Object.Instantiate(gameManager.ItemPointsPrefab, new Vector3(1.0f, 0.0f), Quaternion.identity);
             gameManager.PotionPresent = true;
 
             WizardScript tapController = WizardScript.Instance;
